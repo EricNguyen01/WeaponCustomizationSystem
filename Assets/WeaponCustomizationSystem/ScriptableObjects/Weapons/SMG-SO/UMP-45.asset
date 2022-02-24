@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10cc4777d415eb443bba0ba6d5f34c98, type: 3}
+  m_Name: UMP-45
+  m_EditorClassIdentifier: 
+  <itemName>k__BackingField: UMP-45
+  <itemIcon>k__BackingField: {fileID: 0}
+  <itemPrefab>k__BackingField: {fileID: 5150350398540373082, guid: 59da43ff0eb7c5d4baf5682366ad2739, type: 3}
+  <weaponType>k__BackingField: 1

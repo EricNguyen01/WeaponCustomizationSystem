@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342ee443bb1e5d849a602b9d9bb94f45, type: 3}
+  m_Name: UnderbarrelLaser
+  m_EditorClassIdentifier: 
+  <itemName>k__BackingField: Laser
+  <itemIcon>k__BackingField: {fileID: 0}
+  <itemPrefab>k__BackingField: {fileID: 5582511228909328848, guid: 8ed7f3268fb78d949946bb014f0bb365, type: 3}
+  <attachmentType>k__BackingField: 3
