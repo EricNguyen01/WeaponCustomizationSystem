@@ -24,12 +24,9 @@ namespace WeaponCustomizationSystem
 
         private List<MatSelectionButton> allMatSelectionButtonsList = new List<MatSelectionButton>();
 
-        //this dict within another dict is important.
-        //instead of setting the mat/meshrenderer dict everytime a weapon is being customized which is expensive, 
-        //this dict caches the value so that the dict only needs to be filled once on every "new" weapon (1st time enable in scene)
-        //when the weapon which was enabled and has its value cached in this dict is enabled again, the dict won't need to be filled again!
-        private Dictionary<GameObject, Dictionary<Material, List<MeshRenderer>>> weaponMeshesMatDataDict = new Dictionary<GameObject, Dictionary<Material, List<MeshRenderer>>>();
-
+        //the material/color key-value pair to keep track of the default color that each material has
+        //if a key(mat) never exists which means that it is the first time the material is being used in the paint process -> add the mat and its color
+        //else if a key(mat) alr exists, get the color instead. The mat/color data will then be transfered to the weapon mat selection button associates with them
         private Dictionary<Material, Color> matDefaultColorDict = new Dictionary<Material, Color>();
 
         private int currentMatSelectionButtonSpawned = 0;//keep track of total number of mat selection buttons
@@ -143,18 +140,7 @@ namespace WeaponCustomizationSystem
 
             Dictionary<Material, List<MeshRenderer>> dict = new Dictionary<Material, List<MeshRenderer>>();
 
-            //If the weaponObject parameter turns out to be a weapon that has been processed by this func before, use the values
-            //store in the "weaponMeshesMatDataDict" with the key as this weapon object.
-            //Else, generate a new key/value pair 
-            /*if (weaponMeshesMatDataDict.ContainsKey(currentWeaponObjectToPaint))
-            {
-                dict = weaponMeshesMatDataDict[currentWeaponObjectToPaint];
-            }
-            else
-            {*/
-                dict = SetWeaponMeshMatDict(currentWeaponObjectToPaint);
-                //weaponMeshesMatDataDict.Add(currentWeaponObjectToPaint, dict);
-            //}
+            dict = SetWeaponMeshMatDict(currentWeaponObjectToPaint);
 
             //Check if number of Mat Selection Button matches number of materials
             //Enable a number of buttons that are equal to the number of mats
@@ -326,12 +312,17 @@ namespace WeaponCustomizationSystem
             List<Material> materialsList = new List<Material>();
             Dictionary<Material, List<MeshRenderer>> weaponMeshesMatDict = new Dictionary<Material, List<MeshRenderer>>();
 
-            //Get the list of all materials instance IDs used by this weapon first
+            //Get the list of all materials used by this weapon first
             for (int i = 0; i < meshRenderers.Length; i++)
             {
                 Material[] mats = meshRenderers[i].materials;
                 for (int j = 0; j < mats.Length; j++)
                 {
+                    if (mats[j].name.Contains("Trigger"))//exclude trigger material from paint job
+                    {
+                        continue;
+                    }
+
                     if(materialsList.Count == 0)
                     {
                         materialsList.Add(mats[j]);
