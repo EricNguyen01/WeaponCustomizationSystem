@@ -146,13 +146,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696dec541d528b54c993dad2fb61485a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpawnPosition: {x: 105.893, y: 13.965, z: 67.809}
   selectedColor:
     serializedVersion: 2
     rgba: 4294963891
   defaultColor:
     serializedVersion: 2
     rgba: 4294967295
+  enableWeaponSelectTransition: 1
+  transitionDuration: 0.8
+  transitionHorizontalOffset: 2.3
 --- !u!1 &7218056633581880502
 GameObject:
   m_ObjectHideFlags: 0

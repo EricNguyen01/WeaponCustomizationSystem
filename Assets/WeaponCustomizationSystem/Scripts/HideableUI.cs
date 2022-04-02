@@ -11,16 +11,26 @@ namespace WeaponCustomizationSystem
         [SerializeField] private List<Image> UIImagesToHide = new List<Image>();
         [SerializeField] private List<TextMeshProUGUI> UITextsToHide = new List<TextMeshProUGUI>();
 
+        private CanvasGroup canvasGroup;
+
         public static event System.Action<IHideableUI, bool> OnHideableUIActive;
+
+        private void Awake()
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
 
         private void OnEnable()
         {
             OnHideableUIActive?.Invoke(this, true);
+            WeaponTypeSelectionTab.OnWeaponSelectInTransition += TemporaryDisableInteraction;
         }
 
         private void OnDisable()
         {
             OnHideableUIActive?.Invoke(this, false);
+            WeaponTypeSelectionTab.OnWeaponSelectInTransition -= TemporaryDisableInteraction;
         }
 
         private void Start()
@@ -65,6 +75,15 @@ namespace WeaponCustomizationSystem
                     if (UITextsToHide[i].isActiveAndEnabled) continue;
                     UITextsToHide[i].enabled = true;
                 }
+            }
+        }
+
+        public void TemporaryDisableInteraction(bool disabled)
+        {
+            if(canvasGroup != null)
+            {
+                if (disabled) canvasGroup.interactable = false;
+                else canvasGroup.interactable = true;
             }
         }
     }

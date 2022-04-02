@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 3221956505429414190}
   - component: {fileID: 3221956505429414189}
   - component: {fileID: 3221956505429414186}
+  - component: {fileID: -8956961894501606557}
   m_Layer: 5
   m_Name: BarrelSelectionWorldUI
   m_TagString: Untagged
@@ -751,6 +752,18 @@ MonoBehaviour:
   attachmentSelectionEnableButtonImage: {fileID: 3221956503918281553}
   selectedColor: {r: 1, g: 0.497081, b: 0.23018867, a: 1}
   defaultColor: {r: 0.5137255, g: 0.72156864, b: 0.81960785, a: 1}
+--- !u!225 &-8956961894501606557
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221956505429414188}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3221956505474026838
 GameObject:
   m_ObjectHideFlags: 0

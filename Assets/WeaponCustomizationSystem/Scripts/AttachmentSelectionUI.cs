@@ -27,6 +27,8 @@ namespace WeaponCustomizationSystem
 
         private Canvas attachmentSelectionUICanvas;
         private AttachmentSlot attachmentSlotOfThisAttachmntSelectionUI;
+        private CanvasGroup canvasGroup;
+
         private int currentAttachmentCycle = 0;
         private bool attachmentSelectionBoxUIAlreadyEnabled = false;
 
@@ -36,6 +38,9 @@ namespace WeaponCustomizationSystem
         {
             attachmentSelectionUICanvas = GetComponent<Canvas>();
             attachmentSelectionUICanvas.worldCamera = Camera.main;
+
+            canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
             if(attachmentSelectionEnableButtonImage == null)
             {
@@ -58,6 +63,7 @@ namespace WeaponCustomizationSystem
         {
             OpenTab();//auto and always open tab whenever this obj is enabled
 
+            WeaponTypeSelectionTab.OnWeaponSelectInTransition += TemporaryDisableInteraction;
             AttachmentSelectionUI.OnAttachmentUIButtonClicked += DisableAttachmentSelectionUIOnOtherButtonClicked;
         }
 
@@ -65,6 +71,7 @@ namespace WeaponCustomizationSystem
         {
             CloseTab();//auto and always close tab whenver this obj is disabled
 
+            WeaponTypeSelectionTab.OnWeaponSelectInTransition -= TemporaryDisableInteraction;
             AttachmentSelectionUI.OnAttachmentUIButtonClicked -= DisableAttachmentSelectionUIOnOtherButtonClicked;
         }
 
@@ -255,27 +262,14 @@ namespace WeaponCustomizationSystem
             EnableAttachmentSelectionUI(false);
         }
 
-        /*Unity's EventSystem interface function...........................
-        public void OnPointerClick(PointerEventData eventData)
+        public void TemporaryDisableInteraction(bool disabled)
         {
-            Debug.Log("Pointer Click: " + eventData.pointerClick);
-            //if click away -> turn off the current attachment selection UI box in use
-            if(eventData.pointerEnter == null)
+            EnableAttachmentSelectionUI(false);
+            if (canvasGroup != null)
             {
-                Debug.Log("ClickAway!");
-                EnableAttachmentSelectionUI(false);
+                if (disabled) canvasGroup.interactable = false;
+                else canvasGroup.interactable = true;
             }
         }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            Debug.Log("Pointer Down: " + eventData.pointerClick);
-            //if click away -> turn off the current attachment selection UI box in use
-            if (eventData.pointerClick == null)
-            {
-                Debug.Log("ClickAway!");
-                EnableAttachmentSelectionUI(false);
-            }
-        }*/
     }
 }

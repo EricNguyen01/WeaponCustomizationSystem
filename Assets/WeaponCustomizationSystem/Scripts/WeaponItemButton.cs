@@ -8,9 +8,14 @@ namespace WeaponCustomizationSystem
 {
     public class WeaponItemButton : MonoBehaviour
     {
-        [SerializeField] private Vector3 weaponSpawnPosition;
+        [Header("Color Settings")]
         [SerializeField] private Color32 selectedColor;
         [SerializeField] private Color32 defaultColor;
+
+        private bool enableWeaponSelectTransition = false;
+        private float transitionHorizontalOffset;
+
+        private Vector3 weaponSpawnPosition;
 
         private WeaponTypeSelectionTab thisWeaponTypeTab;
         private WeaponItem weaponItemOfThisButton;
@@ -29,14 +34,23 @@ namespace WeaponCustomizationSystem
             weaponButtonText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        public void SetButtonData(WeaponItem weaponItem, WeaponTypeSelectionTab typeTab)
+        public void SetButtonData(WeaponItem weaponItem, WeaponTypeSelectionTab typeTab, Vector3 spawnPos)
         {
             weaponItemOfThisButton = weaponItem;
             thisWeaponTypeTab = typeTab;
+            weaponSpawnPosition = spawnPos;
+
             weaponObjectSpawned = Instantiate(weaponItemOfThisButton.itemPrefab, weaponSpawnPosition, Quaternion.identity);
             weaponObjectSpawned.SetActive(false);
+
             if (weaponItem.itemIcon != null) weaponButtonIcon.sprite = weaponItem.itemIcon;
             weaponButtonText.text = weaponItem.itemName;
+        }
+
+        public void SetWeaponTransitionData(bool enableTransition, float horizontalOffset)
+        {
+            enableWeaponSelectTransition = enableTransition;
+            transitionHorizontalOffset = horizontalOffset;
         }
 
         //This method is called when the player clicked a weapon button in the Weapon Item Selection Panel UI
@@ -52,6 +66,13 @@ namespace WeaponCustomizationSystem
             weaponObjectSpawned.SetActive(true);
             weaponImage.color = selectedColor;
 
+            if (enableWeaponSelectTransition)
+            {
+                Vector3 weaponSelectTransitionDestination = weaponObjectSpawned.transform.position;
+                Vector3 weaponSelectTransitionStartOffset = new Vector3(weaponObjectSpawned.transform.position.x - transitionHorizontalOffset, weaponObjectSpawned.transform.position.y, weaponObjectSpawned.transform.position.z);
+                thisWeaponTypeTab.WeaponTransitionProcess(weaponObjectSpawned, weaponSelectTransitionStartOffset, weaponSelectTransitionDestination, true);
+            }
+
             //send an event to the color customization board that a new weapon is active and in customization
             //so that the color customization board can adjust
             OnWeaponButtonSelectedAndWeaponObjectEnabled?.Invoke(weaponObjectSpawned, true);
@@ -62,9 +83,16 @@ namespace WeaponCustomizationSystem
         //which will also disable its corresponding weapon object in scene
         public void OnWeaponDeSelected()
         {
-            weaponObjectSpawned.SetActive(false);
             weaponImage.color = defaultColor;
             OnWeaponButtonSelectedAndWeaponObjectEnabled?.Invoke(weaponObjectSpawned, false);
+
+            if (enableWeaponSelectTransition)
+            {
+                Vector3 weaponTransitionStart = weaponObjectSpawned.transform.position;
+                Vector3 weaponTransitionEndOffset = new Vector3(weaponObjectSpawned.transform.position.x + transitionHorizontalOffset, weaponObjectSpawned.transform.position.y, weaponObjectSpawned.transform.position.z);
+                thisWeaponTypeTab.WeaponTransitionProcess(weaponObjectSpawned, weaponTransitionStart, weaponTransitionEndOffset, false);
+            }
+            else weaponObjectSpawned.SetActive(false);
         }
     }
 }

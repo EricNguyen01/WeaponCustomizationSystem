@@ -2453,6 +2453,23 @@ RectTransform:
   m_AnchoredPosition: {x: 106.076, y: 13.997}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1812911592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5952304246173561196, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+  m_PrefabInstance: {fileID: 5952304245133541413}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1812911598
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812911592}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1876579206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3817,6 +3834,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2519253935020142404, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.x
+      value: 105.893
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519253935020142404, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.y
+      value: 13.965
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519253935020142404, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.z
+      value: 67.809
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418266926790138781, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.x
+      value: 105.893
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418266926790138781, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.y
+      value: 13.965
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418266926790138781, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.z
+      value: 67.809
+      objectReference: {fileID: 0}
     - target: {fileID: 5641714899391497595, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4052,6 +4093,30 @@ PrefabInstance:
     - target: {fileID: 5952304246173561196, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
       propertyPath: m_Name
       value: WeaponCustomizationScreenOverlayUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7338529054876277080, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.x
+      value: 105.893
+      objectReference: {fileID: 0}
+    - target: {fileID: 7338529054876277080, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.y
+      value: 13.965
+      objectReference: {fileID: 0}
+    - target: {fileID: 7338529054876277080, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.z
+      value: 67.809
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678996956415499255, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.x
+      value: 105.893
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678996956415499255, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.y
+      value: 13.965
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678996956415499255, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
+      propertyPath: weaponTypeSpawnPos.z
+      value: 67.809
       objectReference: {fileID: 0}
     - target: {fileID: 8775405611271601001, guid: efbbf83c9619b714393a014fa70f617b, type: 3}
       propertyPath: m_AnchorMax.x

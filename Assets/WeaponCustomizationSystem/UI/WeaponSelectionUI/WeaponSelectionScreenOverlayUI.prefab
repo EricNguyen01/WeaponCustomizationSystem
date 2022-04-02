@@ -2368,6 +2368,10 @@ MonoBehaviour:
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 0
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
+  weaponTypeSpawnPos: {x: 105.893, y: 13.965, z: 67.809}
+  enableWeaponSelectTransition: 1
+  transitionDuration: 0.8
+  transitionHorizontalOffset: 2.3
 --- !u!1 &5952304244667967435
 GameObject:
   m_ObjectHideFlags: 0
@@ -2520,6 +2524,10 @@ MonoBehaviour:
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 2
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
+  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  enableWeaponSelectTransition: 1
+  transitionDuration: 0.8
+  transitionHorizontalOffset: 2.3
 --- !u!1 &5952304244846997973
 GameObject:
   m_ObjectHideFlags: 0
@@ -2672,6 +2680,10 @@ MonoBehaviour:
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 4
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
+  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  enableWeaponSelectTransition: 1
+  transitionDuration: 0.8
+  transitionHorizontalOffset: 2.3
 --- !u!1 &5952304245053225599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2958,6 +2970,10 @@ MonoBehaviour:
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 3
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
+  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  enableWeaponSelectTransition: 1
+  transitionDuration: 0.8
+  transitionHorizontalOffset: 2.3
 --- !u!1 &5952304245563442414
 GameObject:
   m_ObjectHideFlags: 0
@@ -3200,6 +3216,10 @@ MonoBehaviour:
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 1
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
+  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  enableWeaponSelectTransition: 1
+  transitionDuration: 0.8
+  transitionHorizontalOffset: 2.3
 --- !u!1 &5952304246143433321
 GameObject:
   m_ObjectHideFlags: 0

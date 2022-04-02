@@ -15,9 +15,11 @@ namespace WeaponCustomizationSystem
      */
     public class WeaponTypeSelectionTab : UITab
     {
+        [Header("Color Settings")]
         [SerializeField] private Color selectedColor;
         [SerializeField] private Color defaultColor;
 
+        [Header("Weapon Type Selection Tab Components")]
         [SerializeField] [Tooltip("The Content game object under Weapon Item Selection Panel's Viewport object.\nThis is where Weapon Item Buttons will be spawned and child under!")]
         private GameObject weaponItemSelectionContent;
 
@@ -27,11 +29,23 @@ namespace WeaponCustomizationSystem
         [SerializeField] [Tooltip("The weapon item UI slot prefab that will be spawned under the Content obj of the WeaponItemSelectionPanel")]
         private WeaponItemButton weaponItemButtonPrefab;
 
+        [SerializeField]
+        [Tooltip("The position that all weapons of this type will be spawned at")]
+        private Vector3 weaponTypeSpawnPos;
+
+        [Header("Weapon Select Transition Settings")]
+        [SerializeField] private bool enableWeaponSelectTransition = false;
+        [SerializeField] private float transitionDuration = 0.8f;
+        [SerializeField] [Tooltip("Horizontal distance the weapon has to move on transition")]
+        private float transitionHorizontalOffset = 2.3f;
+
         //the weapon item buttons spawned by this weapon type selection tab
         private List<WeaponItemButton> weaponItemButtonsOfThisType = new List<WeaponItemButton>();
         private WeaponItemButton selectedWeaponButton;
 
         private Image weaponTypeSelectionUIImage;
+
+        public static event System.Action<bool> OnWeaponSelectInTransition;
 
         public override void Awake()
         {
@@ -141,9 +155,38 @@ namespace WeaponCustomizationSystem
                         continue;
                     }
 
-                    weaponItemButton.SetButtonData(weapons[i], this);
+                    weaponItemButton.SetButtonData(weapons[i], this, weaponTypeSpawnPos);
+                    weaponItemButton.SetWeaponTransitionData(enableWeaponSelectTransition, transitionHorizontalOffset);
                     weaponItemButtonsOfThisType.Add(weaponItemButton);
                 }
+            }
+        }
+
+        public void WeaponTransitionProcess(GameObject weapon, Vector3 from, Vector3 to, bool isBeingSelected)
+        {
+            StartCoroutine(WeaponTransitionProcessCoroutine(weapon, from, to, isBeingSelected));
+        }
+
+        private IEnumerator WeaponTransitionProcessCoroutine(GameObject weapon, Vector3 from, Vector3 to, bool isBeingSelected)
+        {
+            OnWeaponSelectInTransition?.Invoke(true);
+
+            float currentTime = 0f;
+
+            while (currentTime < transitionDuration)
+            {
+                weapon.transform.position = Vector3.Lerp(from, to, currentTime / transitionDuration);
+                currentTime += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            weapon.transform.position = to;
+            OnWeaponSelectInTransition?.Invoke(false);
+
+            if (!isBeingSelected)
+            {
+                weapon.SetActive(false);
+                weapon.transform.position = weaponTypeSpawnPos;
             }
         }
     }
