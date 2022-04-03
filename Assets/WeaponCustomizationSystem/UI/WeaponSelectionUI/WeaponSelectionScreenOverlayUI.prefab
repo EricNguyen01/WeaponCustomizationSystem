@@ -3300,6 +3300,8 @@ GameObject:
   - component: {fileID: 5952304246173561198}
   - component: {fileID: 5952304246173561199}
   - component: {fileID: 5165891193073353091}
+  - component: {fileID: 2474941157163302083}
+  - component: {fileID: 3758132322305990727}
   m_Layer: 5
   m_Name: WeaponSelectionScreenOverlayUI
   m_TagString: Untagged
@@ -3402,13 +3404,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3808f4e853fe73845bb82a119d57c30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIImagesToHide:
-  - {fileID: 5952304245563442411}
-  - {fileID: 7293859489754108401}
-  - {fileID: 864939853397800750}
-  - {fileID: 7618982068907989542}
-  - {fileID: 4366252241489768734}
-  UITextsToHide: []
+  animTransitionInsteadOfHide: 1
+  setInvisibleOnHide: 0
+  hideAnimation: {fileID: 7400000, guid: a8a65e5be35625649a2bce7fab45aee1, type: 2}
+  unHideAnimation: {fileID: 7400000, guid: 45d69fd90babfd1498b942470e7b3b04, type: 2}
+--- !u!225 &2474941157163302083
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952304246173561196}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!111 &3758132322305990727
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952304246173561196}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5952304246286607508
 GameObject:
   m_ObjectHideFlags: 0

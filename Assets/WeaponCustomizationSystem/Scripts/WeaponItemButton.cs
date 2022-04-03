@@ -15,7 +15,7 @@ namespace WeaponCustomizationSystem
         private bool enableWeaponSelectTransition = false;
         private float transitionHorizontalOffset;
 
-        private Vector3 weaponSpawnPosition;
+        private Transform weaponSpawnTransform;
 
         private WeaponTypeSelectionTab thisWeaponTypeTab;
         private WeaponItem weaponItemOfThisButton;
@@ -34,13 +34,13 @@ namespace WeaponCustomizationSystem
             weaponButtonText = GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        public void SetButtonData(WeaponItem weaponItem, WeaponTypeSelectionTab typeTab, Vector3 spawnPos)
+        public void SetButtonData(WeaponItem weaponItem, WeaponTypeSelectionTab typeTab, Transform spawnTransform)
         {
             weaponItemOfThisButton = weaponItem;
             thisWeaponTypeTab = typeTab;
-            weaponSpawnPosition = spawnPos;
+            weaponSpawnTransform = spawnTransform;
 
-            weaponObjectSpawned = Instantiate(weaponItemOfThisButton.itemPrefab, weaponSpawnPosition, Quaternion.identity);
+            weaponObjectSpawned = Instantiate(weaponItemOfThisButton.itemPrefab, weaponSpawnTransform.position, weaponSpawnTransform.rotation);
             weaponObjectSpawned.SetActive(false);
 
             if (weaponItem.itemIcon != null) weaponButtonIcon.sprite = weaponItem.itemIcon;
@@ -69,7 +69,7 @@ namespace WeaponCustomizationSystem
             if (enableWeaponSelectTransition)
             {
                 Vector3 weaponSelectTransitionDestination = weaponObjectSpawned.transform.position;
-                Vector3 weaponSelectTransitionStartOffset = new Vector3(weaponObjectSpawned.transform.position.x - transitionHorizontalOffset, weaponObjectSpawned.transform.position.y, weaponObjectSpawned.transform.position.z);
+                Vector3 weaponSelectTransitionStartOffset = weaponObjectSpawned.transform.position - weaponObjectSpawned.transform.right * transitionHorizontalOffset;
                 thisWeaponTypeTab.WeaponTransitionProcess(weaponObjectSpawned, weaponSelectTransitionStartOffset, weaponSelectTransitionDestination, true);
             }
 
@@ -89,10 +89,15 @@ namespace WeaponCustomizationSystem
             if (enableWeaponSelectTransition)
             {
                 Vector3 weaponTransitionStart = weaponObjectSpawned.transform.position;
-                Vector3 weaponTransitionEndOffset = new Vector3(weaponObjectSpawned.transform.position.x + transitionHorizontalOffset, weaponObjectSpawned.transform.position.y, weaponObjectSpawned.transform.position.z);
+                Vector3 weaponTransitionEndOffset = weaponObjectSpawned.transform.position + weaponObjectSpawned.transform.right * transitionHorizontalOffset;
                 thisWeaponTypeTab.WeaponTransitionProcess(weaponObjectSpawned, weaponTransitionStart, weaponTransitionEndOffset, false);
             }
             else weaponObjectSpawned.SetActive(false);
+        }
+
+        public void EnableWeaponSelectionTransition(bool enabled)
+        {
+            enableWeaponSelectTransition = enabled;
         }
     }
 }

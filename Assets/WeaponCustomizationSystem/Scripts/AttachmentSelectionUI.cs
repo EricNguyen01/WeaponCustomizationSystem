@@ -75,6 +75,11 @@ namespace WeaponCustomizationSystem
             AttachmentSelectionUI.OnAttachmentUIButtonClicked -= DisableAttachmentSelectionUIOnOtherButtonClicked;
         }
 
+        private void LateUpdate()
+        {
+            transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
+        }
+
         //This func only calls once when an attachment slot instance spawns this attachment selection UI subsystem on startup
         public void InitializeAttachmentSelectionUISubsystem(AttachmentSlot slot)
         {
@@ -267,8 +272,16 @@ namespace WeaponCustomizationSystem
             EnableAttachmentSelectionUI(false);
             if (canvasGroup != null)
             {
-                if (disabled) canvasGroup.interactable = false;
-                else canvasGroup.interactable = true;
+                if (disabled)
+                {
+                    canvasGroup.interactable = false;
+                    canvasGroup.alpha = 0f;
+                }
+                else
+                {
+                    canvasGroup.interactable = true;
+                    canvasGroup.alpha = 1f;
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
 
 namespace WeaponCustomizationSystem
 {
@@ -15,6 +16,9 @@ namespace WeaponCustomizationSystem
      */
     public class WeaponTypeSelectionTab : UITab
     {
+        [Header("Tab Cinemachine Virtual Camera")]
+        [SerializeField] private CinemachineVirtualCamera virtualCam;
+
         [Header("Color Settings")]
         [SerializeField] private Color selectedColor;
         [SerializeField] private Color defaultColor;
@@ -31,7 +35,7 @@ namespace WeaponCustomizationSystem
 
         [SerializeField]
         [Tooltip("The position that all weapons of this type will be spawned at")]
-        private Vector3 weaponTypeSpawnPos;
+        private Transform weaponTypeSpawnTransform;
 
         [Header("Weapon Select Transition Settings")]
         [SerializeField] private bool enableWeaponSelectTransition = false;
@@ -50,6 +54,11 @@ namespace WeaponCustomizationSystem
         public override void Awake()
         {
             weaponTypeSelectionUIImage = GetComponent<Image>();
+            if(weaponTypeSpawnTransform == null)
+            {
+                Debug.LogWarning("Spawn Transform of weapon type selection tab: " + name + " is not assigned! Weapon spawn will not work correctly!");
+                weaponTypeSpawnTransform = transform;
+            }
         }
 
         //This method is inherited from UITab class but DOES NOT call the base method in base class itself.
@@ -63,6 +72,8 @@ namespace WeaponCustomizationSystem
         public override void OpenTab()
         {
             weaponTypeSelectionUIImage.color = selectedColor;
+
+            if (virtualCam != null) virtualCam.Priority = 100;
 
             //if a weapon type tab is opened but no weapon of this type exists -> tab is opened but no action is carried out and nothing is displayed!
             if (weaponItemButtonsOfThisType == null || weaponItemButtonsOfThisType.Count == 0) return;
@@ -91,6 +102,14 @@ namespace WeaponCustomizationSystem
                 gameObject.SetActive(true);
             }
 
+            //if weapon selection transition is enabled ->
+            //enable it only after the 1st weapon has spawned after a weapon type tab changed (to accomodate camera transition)
+            for (int i = 0; i < weaponItemButtonsOfThisType.Count; i++)
+            {
+                weaponItemButtonsOfThisType[i].EnableWeaponSelectionTransition(enableWeaponSelectTransition);
+            }
+
+
             base.OpenTab();
         }
 
@@ -98,11 +117,15 @@ namespace WeaponCustomizationSystem
         {
             if (!isInInspectMode) weaponTypeSelectionUIImage.color = defaultColor;
 
+            if (virtualCam != null) virtualCam.Priority = 0;
+
             if (weaponItemButtonsOfThisType == null || weaponItemButtonsOfThisType.Count == 0) return;
 
             for (int i = 0; i < weaponItemButtonsOfThisType.Count; i++)
             {
                 weaponItemButtonsOfThisType[i].gameObject.SetActive(false);
+                //if weapon selection transition is enabled - always disable it on weapon type tab changed (to accomodate camera transition)
+                weaponItemButtonsOfThisType[i].EnableWeaponSelectionTransition(false);
             }
 
             if (!isInInspectMode)
@@ -155,7 +178,7 @@ namespace WeaponCustomizationSystem
                         continue;
                     }
 
-                    weaponItemButton.SetButtonData(weapons[i], this, weaponTypeSpawnPos);
+                    weaponItemButton.SetButtonData(weapons[i], this, weaponTypeSpawnTransform);
                     weaponItemButton.SetWeaponTransitionData(enableWeaponSelectTransition, transitionHorizontalOffset);
                     weaponItemButtonsOfThisType.Add(weaponItemButton);
                 }
@@ -186,7 +209,7 @@ namespace WeaponCustomizationSystem
             if (!isBeingSelected)
             {
                 weapon.SetActive(false);
-                weapon.transform.position = weaponTypeSpawnPos;
+                weapon.transform.position = weaponTypeSpawnTransform.position;
             }
         }
     }

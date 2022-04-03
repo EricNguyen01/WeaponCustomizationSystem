@@ -417,8 +417,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4286175231
-  m_fontColor: {r: 1, g: 0.8439574, b: 0.47547168, a: 1}
+    rgba: 4293385554
+  m_fontColor: {r: 0.32156864, g: 0.8666667, b: 0.90588236, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -804,7 +804,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 106.127, y: 13.964}
+  m_AnchoredPosition: {x: 106.127014, y: 13.963989}
   m_SizeDelta: {x: 2.9843, y: 1.7546}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7517386925313035296
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7517386925313035298
 MonoBehaviour:
   m_ObjectHideFlags: 0

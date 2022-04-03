@@ -6,76 +6,85 @@ using TMPro;
 
 namespace WeaponCustomizationSystem
 {
-    public class HideableUI : MonoBehaviour, IHideableUI
+    public class HideableUI : MonoBehaviour
     {
-        [SerializeField] private List<Image> UIImagesToHide = new List<Image>();
-        [SerializeField] private List<TextMeshProUGUI> UITextsToHide = new List<TextMeshProUGUI>();
+        [SerializeField] private bool animTransitionInsteadOfHide = false;
+        [SerializeField] private bool setInvisibleOnHide = false;
+        [SerializeField] private AnimationClip hideAnimation;
+        [SerializeField] private AnimationClip unHideAnimation;
 
+        private Animation animationComponent;
         private CanvasGroup canvasGroup;
+        public float hideDuration { get; private set; }
+        public float unHideDuration { get; private set; }
 
-        public static event System.Action<IHideableUI, bool> OnHideableUIActive;
+        //public static event System.Action<IHideableUI, bool> OnHideableUIActive;
 
         private void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();
             if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+            animationComponent = GetComponent<Animation>();
+
+            if(animationComponent == null || hideAnimation == null || unHideAnimation == null)
+            {
+                if (animTransitionInsteadOfHide)
+                {
+                    Debug.LogWarning("Animation clip components of HideableUI: " + name + " not found. UI hide/unhide anim transition is disabled!");
+                    animTransitionInsteadOfHide = false;
+                }
+            }
+
+            if (animTransitionInsteadOfHide)
+            {
+                if (setInvisibleOnHide)
+                {
+                    Debug.LogWarning("Can't have both anim transition and invisible settings for HideableUI: " + name + " disabling invisible on hide!");
+                    setInvisibleOnHide = false;
+                }
+                hideDuration = hideAnimation.length;
+                unHideDuration = unHideAnimation.length;
+            }
         }
 
         private void OnEnable()
         {
-            OnHideableUIActive?.Invoke(this, true);
+            //OnHideableUIActive?.Invoke(GetComponent<IHideableUI>(), true);
             WeaponTypeSelectionTab.OnWeaponSelectInTransition += TemporaryDisableInteraction;
         }
 
         private void OnDisable()
         {
-            OnHideableUIActive?.Invoke(this, false);
+            //OnHideableUIActive?.Invoke(GetComponent<IHideableUI>(), false);
             WeaponTypeSelectionTab.OnWeaponSelectInTransition -= TemporaryDisableInteraction;
-        }
-
-        private void Start()
-        {
-            if (UIImagesToHide == null || UIImagesToHide.Count == 0) Debug.LogWarning("HideableUI: " + name + " is in use but no Image components to hide is assigned!");
         }
 
         public void Hide()
         {
-            if (UIImagesToHide != null && UIImagesToHide.Count > 0)
+            TemporaryDisableInteraction(true);
+            if (setInvisibleOnHide) canvasGroup.alpha = 0f;
+            if (animTransitionInsteadOfHide)
             {
-                for(int i = 0; i < UIImagesToHide.Count; i++)
-                {
-                    if (!UIImagesToHide[i].gameObject.activeInHierarchy) continue;
-                    UIImagesToHide[i].enabled = false;
-                }
-            }
-            if (UITextsToHide != null && UITextsToHide.Count > 0)
-            {
-                for(int i = 0; i < UITextsToHide.Count; i++)
-                {
-                    if (!UITextsToHide[i].gameObject.activeInHierarchy) continue;
-                    UITextsToHide[i].enabled = false;
-                }
+                animationComponent.clip = hideAnimation;
+                Debug.Log("Play Hide Anim!");
+                animationComponent.Play();
             }
         }
 
         public void UnHide()
         {
-            if (UIImagesToHide != null && UIImagesToHide.Count > 0)
+            if (animTransitionInsteadOfHide)
             {
-                for (int i = 0; i < UIImagesToHide.Count; i++)
-                {
-                    if (UIImagesToHide[i].isActiveAndEnabled) continue;
-                    UIImagesToHide[i].enabled = true;
-                }
+                animationComponent.clip = unHideAnimation;
+                Debug.Log("Play UnHide Anim!");
+                animationComponent.Play();
+                StartCoroutine(ReEnableInteractionAfterAnim());
+                return;
             }
-            if (UITextsToHide != null && UITextsToHide.Count > 0)
-            {
-                for (int i = 0; i < UITextsToHide.Count; i++)
-                {
-                    if (UITextsToHide[i].isActiveAndEnabled) continue;
-                    UITextsToHide[i].enabled = true;
-                }
-            }
+
+            TemporaryDisableInteraction(false);
+            if (setInvisibleOnHide) canvasGroup.alpha = 1f;
         }
 
         public void TemporaryDisableInteraction(bool disabled)
@@ -85,6 +94,12 @@ namespace WeaponCustomizationSystem
                 if (disabled) canvasGroup.interactable = false;
                 else canvasGroup.interactable = true;
             }
+        }
+
+        private IEnumerator ReEnableInteractionAfterAnim()
+        {
+            yield return new WaitUntil(() => !animationComponent.isPlaying);
+            TemporaryDisableInteraction(false);
         }
     }
 }
