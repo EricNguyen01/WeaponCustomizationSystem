@@ -55,6 +55,23 @@ namespace WeaponCustomizationSystem
             currentlyEquippedAttachmentObj.SetActive(false);
         }
 
+        public void PlayAttachmentEquipSound()
+        {
+            if (currentlyEquippedAttachmentObj == null || !currentlyEquippedAttachmentObj.activeInHierarchy) return;
+
+            SoundPlayer soundPlayer = currentlyEquippedAttachmentObj.GetComponent<SoundPlayer>();
+            if (soundPlayer != null) soundPlayer.PlayAudio();
+
+        }
+
+        public void EnableAttachmentEquipEffect()
+        {
+            if (currentlyEquippedAttachmentObj == null || !currentlyEquippedAttachmentObj.activeInHierarchy) return;
+
+            EffectSpawner effectSpawner = currentlyEquippedAttachmentObj.GetComponent<EffectSpawner>();
+            if (effectSpawner != null) effectSpawner.EnableEffect(true);
+        }
+
         private void GetAttachmentsForThisSlot()
         {
             if (CustomizationInventory.CustomizationInventoryInstance.attachmentList == null || CustomizationInventory.CustomizationInventoryInstance.attachmentList.Count == 0)
@@ -122,6 +139,7 @@ namespace WeaponCustomizationSystem
                 }
 
                 GameObject obj = Instantiate(attachmentsForThisSlot[i].itemPrefab, transform.position, Quaternion.identity, transform);
+                obj.transform.rotation = Quaternion.FromToRotation(obj.transform.right, transform.root.right);
                 attachmentItemObjects.Add(obj);
                 obj.SetActive(false);
             }

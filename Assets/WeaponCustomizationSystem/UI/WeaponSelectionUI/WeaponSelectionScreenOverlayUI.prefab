@@ -2363,12 +2363,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef4737e6618c754aaa61ccb0ee8f105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCam: {fileID: 0}
   selectedColor: {r: 1, g: 0.6039794, b: 0.37169808, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 0
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
-  weaponTypeSpawnPos: {x: 105.893, y: 13.965, z: 67.809}
+  weaponTypeSpawnTransform: {fileID: 0}
   enableWeaponSelectTransition: 1
   transitionDuration: 0.8
   transitionHorizontalOffset: 2.3
@@ -2519,12 +2520,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef4737e6618c754aaa61ccb0ee8f105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCam: {fileID: 0}
   selectedColor: {r: 1, g: 0.6039794, b: 0.37169808, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 2
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
-  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  weaponTypeSpawnTransform: {fileID: 0}
   enableWeaponSelectTransition: 1
   transitionDuration: 0.8
   transitionHorizontalOffset: 2.3
@@ -2675,12 +2677,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef4737e6618c754aaa61ccb0ee8f105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCam: {fileID: 0}
   selectedColor: {r: 1, g: 0.6039794, b: 0.37169808, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 4
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
-  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  weaponTypeSpawnTransform: {fileID: 0}
   enableWeaponSelectTransition: 1
   transitionDuration: 0.8
   transitionHorizontalOffset: 2.3
@@ -2965,12 +2968,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef4737e6618c754aaa61ccb0ee8f105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCam: {fileID: 0}
   selectedColor: {r: 1, g: 0.6039794, b: 0.37169808, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 3
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
-  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  weaponTypeSpawnTransform: {fileID: 0}
   enableWeaponSelectTransition: 1
   transitionDuration: 0.8
   transitionHorizontalOffset: 2.3
@@ -3211,12 +3215,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef4737e6618c754aaa61ccb0ee8f105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCam: {fileID: 0}
   selectedColor: {r: 1, g: 0.6039794, b: 0.37169808, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   weaponItemSelectionContent: {fileID: 8999761545748903558}
   weaponType: 1
   weaponItemButtonPrefab: {fileID: -7924144428782399754, guid: b131a2c82fd9bde4991519f5e1d20b37, type: 3}
-  weaponTypeSpawnPos: {x: 0, y: 0, z: 0}
+  weaponTypeSpawnTransform: {fileID: 0}
   enableWeaponSelectTransition: 1
   transitionDuration: 0.8
   transitionHorizontalOffset: 2.3

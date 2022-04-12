@@ -180,6 +180,8 @@ namespace WeaponCustomizationSystem
             DisplayAttachmentIconAndName();
 
             attachmentSlotOfThisAttachmntSelectionUI.EquipAttachment(attachmentSlotOfThisAttachmntSelectionUI.attachmentsForThisSlot[currentAttachmentCycle]);
+            attachmentSlotOfThisAttachmntSelectionUI.PlayAttachmentEquipSound();
+            attachmentSlotOfThisAttachmntSelectionUI.EnableAttachmentEquipEffect();
         }
 
         public void OnPreviousAttachmentButtonClicked()
@@ -205,6 +207,8 @@ namespace WeaponCustomizationSystem
             DisplayAttachmentIconAndName();
 
             attachmentSlotOfThisAttachmntSelectionUI.EquipAttachment(attachmentSlotOfThisAttachmntSelectionUI.attachmentsForThisSlot[currentAttachmentCycle]);
+            attachmentSlotOfThisAttachmntSelectionUI.PlayAttachmentEquipSound();
+            attachmentSlotOfThisAttachmntSelectionUI.EnableAttachmentEquipEffect();
         }
 
         private void DisplayAttachmentIconAndName()
