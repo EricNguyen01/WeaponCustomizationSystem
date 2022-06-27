@@ -73,37 +73,26 @@ namespace WeaponCustomizationSystem
         //UnityEvent to block weapon from being inspected
         //Triggers OnCamTransition and OnCamFinishedTransition UnityEvent in Camera object
         //Triggers on weapon change transition (check WeaponTypeSelectionTab.cs and WeaponItemButton.cs)
-        public void DisableWeaponInspection(bool disabled)
+        public void DisableWeaponInspection(bool disableStatus)
         {
-            if (disabled)
+            //if disable weapon inspect received a true -> can inspect and UI display is set to false and vice versa 
+            //basically the bools are inverted here
+            canInspect = !disableStatus;
+
+            if (inspectButtonImageComponent != null) inspectButtonImageComponent.enabled = !disableStatus;
+
+            foreach (Image imageComp in GetComponentsInChildren<Image>())
             {
-                canInspect = false;
-
-                if (inspectButtonImageComponent != null) inspectButtonImageComponent.enabled = false;
-
-                if(inspectButtonTextMeshPro != null)
-                {
-                    inspectButtonTextMeshPro.enabled = false;
-                }
-                else
-                {
-                    if (inspectButtonText != null) inspectButtonText.enabled = false;
-                }
-
-                return;
+                imageComp.enabled = !disableStatus;
             }
-
-            canInspect = true;
-
-            if (inspectButtonImageComponent != null) inspectButtonImageComponent.enabled = true;
 
             if (inspectButtonTextMeshPro != null)
             {
-                inspectButtonTextMeshPro.enabled = true;
+                inspectButtonTextMeshPro.enabled = !disableStatus;
             }
             else
             {
-                if (inspectButtonText != null) inspectButtonText.enabled = true;
+                if (inspectButtonText != null) inspectButtonText.enabled = !disableStatus;
             }
         }
     }
