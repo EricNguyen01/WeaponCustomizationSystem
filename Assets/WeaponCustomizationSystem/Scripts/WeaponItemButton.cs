@@ -25,6 +25,8 @@ namespace WeaponCustomizationSystem
         private TextMeshProUGUI weaponButtonText;
         private Image weaponImage;
 
+        //below is a C# event that triggered when a new weapon is active/inactive and in customization/or not in customization
+        //so that the color customization board or any script that requires data on the new weapon being customized can adjust accordingly
         public static event System.Action<GameObject, bool> OnWeaponButtonSelectedAndWeaponObjectEnabled;
 
         private void Awake()
@@ -40,7 +42,8 @@ namespace WeaponCustomizationSystem
             thisWeaponTypeTab = typeTab;
             weaponSpawnTransform = spawnTransform;
 
-            weaponObjectSpawned = Instantiate(weaponItemOfThisButton.itemPrefab, weaponSpawnTransform.position, weaponSpawnTransform.rotation);
+            //weaponObjectSpawned = Instantiate(weaponItemOfThisButton.itemPrefab, weaponSpawnTransform.position, weaponSpawnTransform.rotation);
+            weaponObjectSpawned = weaponItem.InstantiateItemPrefab(weaponSpawnTransform.position, weaponSpawnTransform.rotation);
             weaponObjectSpawned.SetActive(false);
 
             if (weaponItem.itemIcon != null) weaponButtonIcon.sprite = weaponItem.itemIcon;
@@ -73,8 +76,8 @@ namespace WeaponCustomizationSystem
                 thisWeaponTypeTab.WeaponTransitionProcess(weaponObjectSpawned, weaponSelectTransitionStartOffset, weaponSelectTransitionDestination, true);
             }
 
-            //send an event to the color customization board that a new weapon is active and in customization
-            //so that the color customization board can adjust
+            //send an event that a new weapon is active and in customization
+            //so that the color customization board or any script that requires data on the new weapon being customized can adjust accordingly
             OnWeaponButtonSelectedAndWeaponObjectEnabled?.Invoke(weaponObjectSpawned, true);
         }
 

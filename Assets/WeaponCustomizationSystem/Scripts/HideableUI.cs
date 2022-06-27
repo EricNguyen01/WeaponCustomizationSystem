@@ -18,7 +18,7 @@ namespace WeaponCustomizationSystem
         public float hideDuration { get; private set; }
         public float unHideDuration { get; private set; }
 
-        //public static event System.Action<IHideableUI, bool> OnHideableUIActive;
+        //public static event System.Action<bool> OnHideAllUIElements;
 
         private void Awake()
         {
@@ -50,56 +50,64 @@ namespace WeaponCustomizationSystem
 
         private void OnEnable()
         {
-            //OnHideableUIActive?.Invoke(GetComponent<IHideableUI>(), true);
-            WeaponTypeSelectionTab.OnWeaponSelectInTransition += TemporaryDisableInteraction;
+            WeaponTypeSelectionTab.OnWeaponSelectInTransition += TemporaryDisableUIInteraction;
         }
 
         private void OnDisable()
         {
-            //OnHideableUIActive?.Invoke(GetComponent<IHideableUI>(), false);
-            WeaponTypeSelectionTab.OnWeaponSelectInTransition -= TemporaryDisableInteraction;
+            WeaponTypeSelectionTab.OnWeaponSelectInTransition -= TemporaryDisableUIInteraction;
         }
 
         public void Hide()
         {
-            TemporaryDisableInteraction(true);
+            TemporaryDisableUIInteraction(true);
             if (setInvisibleOnHide) canvasGroup.alpha = 0f;
             if (animTransitionInsteadOfHide)
             {
                 animationComponent.clip = hideAnimation;
-                Debug.Log("Play Hide Anim!");
+                //Debug.Log("Play Hide Anim!");
                 animationComponent.Play();
             }
         }
 
         public void UnHide()
         {
+            //if is using animation transition
             if (animTransitionInsteadOfHide)
             {
                 animationComponent.clip = unHideAnimation;
-                Debug.Log("Play UnHide Anim!");
+                //Debug.Log("Play UnHide Anim!");
                 animationComponent.Play();
                 StartCoroutine(ReEnableInteractionAfterAnim());
                 return;
             }
 
-            TemporaryDisableInteraction(false);
+            //if NOT using anim transition but using instant Unhide instead
+            TemporaryDisableUIInteraction(false);
             if (setInvisibleOnHide) canvasGroup.alpha = 1f;
         }
 
-        public void TemporaryDisableInteraction(bool disabled)
+        public void TemporaryDisableUIInteraction(bool disabled)
         {
             if(canvasGroup != null)
             {
-                if (disabled) canvasGroup.interactable = false;
-                else canvasGroup.interactable = true;
+                if (disabled)
+                {
+                    canvasGroup.interactable = false;
+                    canvasGroup.blocksRaycasts = false;
+                }
+                else
+                {
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true;
+                }
             }
         }
 
         private IEnumerator ReEnableInteractionAfterAnim()
         {
             yield return new WaitUntil(() => !animationComponent.isPlaying);
-            TemporaryDisableInteraction(false);
+            TemporaryDisableUIInteraction(false);
         }
     }
 }

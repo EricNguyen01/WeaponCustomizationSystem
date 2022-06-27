@@ -13,9 +13,10 @@ namespace WeaponCustomizationSystem
         [field: SerializeField] public GameObject itemPrefab { get; private set; }
         public enum ItemType { Weapon, Attachment}
 
-        public virtual void Awake()
+        public virtual GameObject InstantiateItemPrefab(Vector3 pos, Quaternion rot)
         {
-
+            GameObject instantiatedPrefab = Instantiate(itemPrefab, pos, rot);
+            return instantiatedPrefab;
         }
     }
 }

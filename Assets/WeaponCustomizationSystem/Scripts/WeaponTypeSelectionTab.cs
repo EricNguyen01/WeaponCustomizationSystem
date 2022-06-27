@@ -91,16 +91,7 @@ namespace WeaponCustomizationSystem
             }
 
             //display the weapon (weapon display is done in OnWeaponSelected() func in WeaponItemButton.cs)
-            if (!isInInspectMode)
-            {
-                selectedWeaponButton.OnWeaponSelected();
-                //weaponTypeSelectionUIImage.color = selectedColor;
-            }
-            else
-            {
-                //if in inspector mode, DO NOTHING to the current displayed weapon or color. ONLY disable this tab and its spawned buttons
-                gameObject.SetActive(true);
-            }
+            selectedWeaponButton.OnWeaponSelected();
 
             //if weapon selection transition is enabled ->
             //enable it only after the 1st weapon has spawned after a weapon type tab changed (to accomodate camera transition)
@@ -115,7 +106,7 @@ namespace WeaponCustomizationSystem
 
         public override void CloseTab()
         {
-            if (!isInInspectMode) weaponTypeSelectionUIImage.color = defaultColor;
+            weaponTypeSelectionUIImage.color = defaultColor;
 
             if (virtualCam != null) virtualCam.Priority = 0;
 
@@ -128,15 +119,7 @@ namespace WeaponCustomizationSystem
                 weaponItemButtonsOfThisType[i].EnableWeaponSelectionTransition(false);
             }
 
-            if (!isInInspectMode)
-            {
-                if (selectedWeaponButton != null) selectedWeaponButton.OnWeaponDeSelected();
-            }
-            else
-            {
-                //if in inspector mode, DO NOTHING to the current displayed weapon or color. ONLY disable this tab and its spawned buttons
-                gameObject.SetActive(false);
-            }
+            if (selectedWeaponButton != null) selectedWeaponButton.OnWeaponDeSelected();
 
             base.CloseTab();
         }

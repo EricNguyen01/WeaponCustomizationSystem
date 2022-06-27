@@ -23,7 +23,6 @@ namespace WeaponCustomizationSystem
 
         private WeaponTypeSelectionTab currentWeaponTypeSelectionTab;//keep track of the current opening tab
         private WeaponTypeSelectionTab previousWeaponTypeSelectionTab;//keep track of the previously opened tab
-        public bool isInInspectMode { get; set; } = false;
 
         private void Awake()
         {
@@ -46,22 +45,13 @@ namespace WeaponCustomizationSystem
 
         public void ChangeWeaponTypeSelectionTab(WeaponTypeSelectionTab tabToChangeTo)
         {
+            //trigger UnityEvent - any event registered by pressing the "+" button will be executed after weapon tab changed
             OnWeaponTypeTabChanged?.Invoke();
+            //process changing the weapon type tabs
             currentWeaponTypeSelectionTab.CloseTab();
             previousWeaponTypeSelectionTab = currentWeaponTypeSelectionTab;
             currentWeaponTypeSelectionTab = tabToChangeTo;
             currentWeaponTypeSelectionTab.OpenTab();
-        }
-
-        public void EnableInspectMode(bool enableStatus)
-        {
-            if (enableStatus)
-            {
-                isInInspectMode = true;
-                return;
-            }
-
-            isInInspectMode = false;
         }
 
         public void AddUITabToList(UITab tab)

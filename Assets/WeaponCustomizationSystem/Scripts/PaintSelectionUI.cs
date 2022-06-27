@@ -393,16 +393,11 @@ namespace WeaponCustomizationSystem
 
         public override void OpenTab()
         {
-            //TODO IF TIME ALLOWS: Expand tab (and enabling if coming out of inspect mode) on tab opens!
-            if(!gameObject.activeInHierarchy) gameObject.SetActive(true);
             base.OpenTab();
         }
 
         public override void CloseTab()
         {
-            //TODO IF TIME ALLOWS: Minimize tab instead of disable on tab closes!
-
-            if (isInInspectMode) gameObject.SetActive(false);
             base.CloseTab();
         }
     }

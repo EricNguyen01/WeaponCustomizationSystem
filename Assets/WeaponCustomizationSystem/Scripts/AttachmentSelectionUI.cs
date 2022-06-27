@@ -64,6 +64,7 @@ namespace WeaponCustomizationSystem
             OpenTab();//auto and always open tab whenever this obj is enabled
 
             WeaponTypeSelectionTab.OnWeaponSelectInTransition += TemporaryDisableInteraction;
+            WeaponInspect.OnWeaponInInspection += TemporaryDisableInteraction;
             AttachmentSelectionUI.OnAttachmentUIButtonClicked += DisableAttachmentSelectionUIOnOtherButtonClicked;
         }
 
@@ -72,6 +73,7 @@ namespace WeaponCustomizationSystem
             CloseTab();//auto and always close tab whenver this obj is disabled
 
             WeaponTypeSelectionTab.OnWeaponSelectInTransition -= TemporaryDisableInteraction;
+            WeaponInspect.OnWeaponInInspection -= TemporaryDisableInteraction;
             AttachmentSelectionUI.OnAttachmentUIButtonClicked -= DisableAttachmentSelectionUIOnOtherButtonClicked;
         }
 
@@ -126,21 +128,11 @@ namespace WeaponCustomizationSystem
         {
             EnableAttachmentSelectionUI(false);
 
-            //only run this statement when coming out of inspect mode (weapon parent was not disabled, only this was and needed to be reabled again!)
-            //normally, this OpenTab() func is called once when the game obj becomes enabled (enable is done when the parent weapon obj is enabled)
-            if (isInInspectMode) gameObject.SetActive(true);
-
             base.OpenTab();//registering this UITab to the active tabs list of UITabsManager if not already
         }
 
         public override void CloseTab()
         {
-            if (isInInspectMode)
-            {
-                if(gameObject.activeInHierarchy) gameObject.SetActive(false);
-                //EnableAttachmentSelectionUI(false);
-            }
-
             base.CloseTab();
         }
 
@@ -254,7 +246,7 @@ namespace WeaponCustomizationSystem
 
             if (attachmentSelectionBoxUIPanel.gameObject.activeInHierarchy)
             {
-                attachmentSelectionBoxUIPanel.gameObject.SetActive(false);
+                if(attachmentSelectionBoxUIPanel.gameObject.activeInHierarchy) attachmentSelectionBoxUIPanel.gameObject.SetActive(false);
 
                 if (attachmentSelectionEnableButtonImage != null) attachmentSelectionEnableButtonImage.color = defaultColor;
 

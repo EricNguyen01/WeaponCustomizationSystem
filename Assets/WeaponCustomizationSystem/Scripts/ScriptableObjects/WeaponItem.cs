@@ -13,5 +13,13 @@ namespace WeaponCustomizationSystem
         public enum WeaponType { AssaultRifle, SMG, LMG, SniperRifle, Handgun}
         [field: SerializeField] public WeaponType weaponType { get; private set; } = WeaponType.AssaultRifle;
 
+        public override GameObject InstantiateItemPrefab(Vector3 pos, Quaternion rot)
+        {
+            GameObject instantiatedPrefab = base.InstantiateItemPrefab(pos, rot);
+            
+            if (instantiatedPrefab.GetComponent<WeaponInspect>() == null) instantiatedPrefab.AddComponent<WeaponInspect>();
+
+            return instantiatedPrefab;
+        }
     }
 }

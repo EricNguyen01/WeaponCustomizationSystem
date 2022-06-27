@@ -10,7 +10,6 @@ namespace WeaponCustomizationSystem
      */
     public class UITab : MonoBehaviour
     {
-        protected bool isInInspectMode = false;
 
         public virtual void Awake()
         {
@@ -51,13 +50,7 @@ namespace WeaponCustomizationSystem
 
         public virtual void CloseTab()
         {
-            if (!isInInspectMode) UITabsManager.UITabsManagerInstance.RemoveUITabFromList(this);
-        }
-        //...................................................................................
-
-        public void SetInspectStatus(bool isInspecting)
-        {
-            isInInspectMode = isInspecting;
+            UITabsManager.UITabsManagerInstance.RemoveUITabFromList(this);
         }
     }
 }
