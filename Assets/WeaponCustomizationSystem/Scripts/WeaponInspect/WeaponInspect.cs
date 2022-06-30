@@ -27,8 +27,7 @@ namespace WeaponCustomizationSystem
         private bool isInTransition = false;
 
         [Header("Weapon Inspect Config")]
-        [SerializeField] [Range(50f, 150f)] private float inspectDragRotateSpeed = 85f;
-        [SerializeField] [Range(0.3f, 1f)] private float inspectDragAccelerateTime = 0.5f;
+        [SerializeField] [Range(50f, 150f)] private float inspectDragRotateSpeed = 55f;
 
         [SerializeField] 
         [Tooltip("Time it takes for the weapon being customized to move to its inspect pos and rot after inspect button is clicked")] 
@@ -105,17 +104,17 @@ namespace WeaponCustomizationSystem
             //if for some reasons inspect is not enabled but this coroutine is alr started, do nothing and move to next frames without exiting the coroutine
             if (!isInspectEnabled) yield return null;
 
+            GameObject parent = new GameObject();
+            parent.transform.position = transform.position;
+            transform.parent = parent.transform;
+
             float mouseHoldTime = 0f;
-            float acceleration = 0f;
-            float accelTime = 0f;
 
             while (isInspectEnabled)
             {
                 if (Input.GetButtonUp("Fire1"))
                 {
                     mouseHoldTime = 0f;
-                    acceleration = 0f;
-                    accelTime = 0f;
                 }
 
                 if (Input.GetButton("Fire1"))
@@ -124,26 +123,12 @@ namespace WeaponCustomizationSystem
 
                     if (mouseHoldTime >= 0.12f)
                     {
-                        //lerp acceleration rate within the set acceleration time
-                        //acceleration lerp from 0f (no speed or rotation) to 1f (max speed and fastest rotation)
-                        if (accelTime <= inspectDragAccelerateTime)
-                        {
-                            accelTime += Time.fixedDeltaTime;
-                            acceleration = Mathf.Lerp(0f, 1f, accelTime / inspectDragAccelerateTime);
-                        }
-                        else
-                        {
-                            accelTime = inspectDragAccelerateTime;
-                            acceleration = 1f;
-                        }
-
                         //calculate weapon inspect drag rotation and drag speed with acceleration
                         float xDelta = Input.GetAxis("Mouse X");
                         float yDelta = Input.GetAxis("Mouse Y");
-                        Vector3 eulerAnglesChange = new Vector3(-yDelta, xDelta);
-                        Vector3 eulerAngles = transform.eulerAngles;
-                        eulerAngles += eulerAnglesChange * inspectDragRotateSpeed * acceleration * Time.fixedDeltaTime;
-                        transform.eulerAngles = eulerAngles;
+
+                        parent.transform.eulerAngles += new Vector3(-yDelta, 0f, 0f) * inspectDragRotateSpeed * 0.75f * Time.fixedDeltaTime;
+                        transform.localEulerAngles += new Vector3(0f, xDelta, 0f) * inspectDragRotateSpeed * Time.fixedDeltaTime;
                     }
                 }
 
@@ -152,6 +137,9 @@ namespace WeaponCustomizationSystem
 
                 yield return new WaitForFixedUpdate();
             }
+
+            transform.SetParent(null);
+            Destroy(parent);
         }
 
         private void OnInspectEnded()
@@ -313,13 +301,12 @@ namespace WeaponCustomizationSystem
         {
             Quaternion rot;
 
-            float distanceFromCam = Vector3.Distance(camTransform.position, transform.position);
+            float distanceFromCam = Vector3.Distance(weaponPos, camTransform.position);
             Vector3 pos = camTransform.position + camTransform.forward * (distanceFromCam * inspectDistanceReductionMultiplier);
-
-            //direction from camera to weapon inspect start pos doesnt take into account offset (hence the weaponPos.x - (rightoffset - leftoffset))
             Vector3 dir = camTransform.position - pos;
             dir.Normalize();
             rot = Quaternion.LookRotation(dir);
+            rot = Quaternion.Euler(new Vector3(0f, rot.eulerAngles.y, rot.eulerAngles.z));
 
             return rot;
         }
