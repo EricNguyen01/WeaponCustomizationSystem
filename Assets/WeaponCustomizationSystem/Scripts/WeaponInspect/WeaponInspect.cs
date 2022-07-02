@@ -27,7 +27,7 @@ namespace WeaponCustomizationSystem
         private bool isInTransition = false;
 
         [Header("Weapon Inspect Config")]
-        [SerializeField] [Range(50f, 150f)] private float inspectDragRotateSpeed = 55f;
+        [SerializeField] [Range(50f, 150f)] private float inspectDragRotateSpeed = 90f;
 
         [SerializeField] 
         [Tooltip("Time it takes for the weapon being customized to move to its inspect pos and rot after inspect button is clicked")] 
@@ -102,7 +102,7 @@ namespace WeaponCustomizationSystem
         private IEnumerator InspectLoopCoroutine()
         {
             //if for some reasons inspect is not enabled but this coroutine is alr started, do nothing and move to next frames without exiting the coroutine
-            if (!isInspectEnabled) yield return null;
+            if (!isInspectEnabled) yield break;
 
             GameObject parent = new GameObject();
             parent.transform.position = transform.position;
@@ -121,15 +121,13 @@ namespace WeaponCustomizationSystem
                 {
                     mouseHoldTime += Time.fixedDeltaTime;
 
-                    if (mouseHoldTime >= 0.12f)
-                    {
-                        //calculate weapon inspect drag rotation and drag speed with acceleration
-                        float xDelta = Input.GetAxis("Mouse X");
-                        float yDelta = Input.GetAxis("Mouse Y");
+                    //calculate weapon inspect drag rotation and drag speed with acceleration
+                    float xDelta = Input.GetAxis("Mouse X");
+                    float yDelta = Input.GetAxis("Mouse Y");
 
-                        parent.transform.eulerAngles += new Vector3(-yDelta, 0f, 0f) * inspectDragRotateSpeed * 0.75f * Time.fixedDeltaTime;
-                        transform.localEulerAngles += new Vector3(0f, xDelta, 0f) * inspectDragRotateSpeed * Time.fixedDeltaTime;
-                    }
+                    parent.transform.eulerAngles += new Vector3(-yDelta, 0f, 0f) * inspectDragRotateSpeed * 0.86f * Time.fixedDeltaTime;
+                    transform.localEulerAngles += new Vector3(0f, xDelta, 0f) * inspectDragRotateSpeed * Time.fixedDeltaTime;
+
                 }
 
                 //adjust FOV based on mouse scroll
@@ -140,6 +138,8 @@ namespace WeaponCustomizationSystem
 
             transform.SetParent(null);
             Destroy(parent);
+
+            yield break;
         }
 
         private void OnInspectEnded()
@@ -245,6 +245,8 @@ namespace WeaponCustomizationSystem
             //set and trigger inspect transition finish event
             isInTransition = false;
             OnWeaponInspectInTransition?.Invoke(false);
+
+            yield break;
         }
 
         private IEnumerator SetInspectStatusAfterTransition(bool inspectEnableStatus)
@@ -263,7 +265,6 @@ namespace WeaponCustomizationSystem
 
             //else if inspect is not enabled which means that the user has exit inspect mode -> set weapon in inspection event to false and stop inspect loop
             OnWeaponInInspection?.Invoke(false);
-            StopCoroutine(InspectLoopCoroutine());
         }
 
         private Vector3 CalculateInspectStartPosFromCam(Transform camTransform)
